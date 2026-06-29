@@ -45,19 +45,19 @@ export const matchModels = createServerFn({ method: "POST" })
     const prompt = `Brief:\n${data.brief}\n\nMood tags: ${data.mood.join(", ") || "(none)"}\n\nRoster (JSON):\n${JSON.stringify(roster, null, 2)}`;
 
     try {
-      const { experimental_output } = await generateText({
+      const { output } = await generateText({
         model: gateway("google/gemini-3-flash-preview"),
         system,
         prompt,
-        experimental_output: Output.object({ schema: MatchOutput }),
+        output: Output.object({ schema: MatchOutput }),
       });
 
-      const valid = experimental_output.matches
-        .filter((m) => MODELS.some((r) => r.slug === m.slug))
+      const valid = output.matches
+        .filter((m: { slug: string }) => MODELS.some((r) => r.slug === m.slug))
         .slice(0, 3);
 
       return {
-        summary: experimental_output.summary,
+        summary: output.summary,
         matches: valid.length > 0 ? valid : fallbackMatches(),
       };
     } catch (err) {
