@@ -81,10 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Kaslyn Atelier is a luxury modeling agency curating women for editorial, brand campaigns, runway, and digital direction — powered by AI talent discovery." },
       { name: "author", content: "Kaslyn Atelier" },
       { property: "og:title", content: "Kaslyn Atelier — Modeling Agency" },
-      { property: "og:description", content: "Curating the future of presence. Luxury modeling, brand marketing, and AI-driven talent discovery." },
+      { property: "og:description", content: "Kaslyn Atelier is a luxury modeling agency curating women for editorial, brand campaigns, runway, and digital direction — powered by AI talent discovery." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@kaslynatelier" },
+      { name: "twitter:title", content: "Kaslyn Atelier — Modeling Agency" },
+      { name: "twitter:description", content: "Kaslyn Atelier is a luxury modeling agency curating women for editorial, brand campaigns, runway, and digital direction — powered by AI talent discovery." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/90ac130f-323d-42e1-b2ec-272fb8e3ab6a" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/90ac130f-323d-42e1-b2ec-272fb8e3ab6a" },
     ],
     links: [
       {
