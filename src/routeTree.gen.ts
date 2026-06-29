@@ -14,6 +14,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AiDiscoveryRouteImport } from './routes/ai-discovery'
+import { Route as IndexRouteImport } from './routes/index'
 
 const TalentRoute = TalentRouteImport.update({
   id: '/talent',
@@ -40,8 +41,14 @@ const AiDiscoveryRoute = AiDiscoveryRouteImport.update({
   path: '/ai-discovery',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/ai-discovery': typeof AiDiscoveryRoute
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
@@ -49,6 +56,7 @@ export interface FileRoutesByFullPath {
   '/talent': typeof TalentRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/ai-discovery': typeof AiDiscoveryRoute
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
@@ -57,6 +65,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/ai-discovery': typeof AiDiscoveryRoute
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
@@ -66,15 +75,23 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/ai-discovery'
     | '/contact'
     | '/services'
     | '/sitemap.xml'
     | '/talent'
   fileRoutesByTo: FileRoutesByTo
-  to: '/ai-discovery' | '/contact' | '/services' | '/sitemap.xml' | '/talent'
+  to:
+    | '/'
+    | '/ai-discovery'
+    | '/contact'
+    | '/services'
+    | '/sitemap.xml'
+    | '/talent'
   id:
     | '__root__'
+    | '/'
     | '/ai-discovery'
     | '/contact'
     | '/services'
@@ -83,6 +100,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AiDiscoveryRoute: typeof AiDiscoveryRoute
   ContactRoute: typeof ContactRoute
   ServicesRoute: typeof ServicesRoute
@@ -127,10 +145,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AiDiscoveryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AiDiscoveryRoute: AiDiscoveryRoute,
   ContactRoute: ContactRoute,
   ServicesRoute: ServicesRoute,
