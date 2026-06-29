@@ -1,0 +1,152 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
+import { AiMatcher } from "@/components/ai-matcher";
+import { MODELS } from "@/lib/models";
+import heroVideo from "@/assets/kaslyn-hero.mp4.asset.json";
+
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Kaslyn Atelier — Luxury Modeling Agency" },
+      { name: "description", content: "Kaslyn Atelier curates women for editorial, runway, and brand campaigns — with AI-driven talent discovery." },
+      { property: "og:title", content: "Kaslyn Atelier — Luxury Modeling Agency" },
+      { property: "og:description", content: "Curating the future of presence. Editorial, runway, and AI-driven talent." },
+    ],
+  }),
+  component: HomePage,
+});
+
+function HomePage() {
+  const featured = MODELS.slice(0, 3);
+  return (
+    <div className="bg-cream text-midnight">
+      <div className="relative">
+        <SiteNav variant="dark" />
+        <section className="relative h-screen min-h-[700px] w-full bg-midnight overflow-hidden">
+          <video
+            src={heroVideo.url}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-60 animate-curtain"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-midnight/40 via-transparent to-midnight" />
+          <div className="relative z-10 h-full flex items-center px-6 md:px-20">
+            <div className="max-w-4xl animate-fade-up">
+              <p className="text-cream/70 text-[10px] uppercase tracking-[0.4em] mb-6">An Atelier of Presence — Est. Mumbai</p>
+              <h1 className="font-serif text-cream text-5xl md:text-8xl lg:text-9xl leading-[0.95] italic">
+                Refining the<br />
+                <span className="not-italic text-terra-light">Art of Influence.</span>
+              </h1>
+              <div className="mt-12 flex flex-col md:flex-row md:items-end gap-8 max-w-2xl">
+                <p className="text-cream/70 text-sm md:text-base leading-relaxed tracking-wide max-w-md">
+                  Kaslyn Atelier merges traditional placement with AI-driven talent discovery, ensuring every campaign resonates with surgical precision and royal elegance.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                  <Link to="/ai-discovery" className="px-8 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
+                    Launch AI Selector
+                  </Link>
+                  <Link to="/talent" className="px-8 py-4 border border-cream/40 text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
+                    View Portfolio
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-cream/50 text-[10px] uppercase tracking-[0.4em] flex flex-col items-center gap-2">
+            <span>Scroll</span>
+            <div className="w-px h-10 bg-cream/30" />
+          </div>
+        </section>
+      </div>
+
+      <section className="py-24 md:py-32 px-6 md:px-12 bg-cream">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+          <div className="order-2 lg:order-1">
+            <AiMatcher />
+          </div>
+          <div className="order-1 lg:order-2">
+            <span className="text-terra-mid font-bold uppercase tracking-[0.3em] text-[10px]">Modern Innovation</span>
+            <h2 className="font-serif text-4xl md:text-6xl mt-4 mb-6 leading-[1.05]">
+              Data-Driven Beauty,<br />Tailored to You.
+            </h2>
+            <p className="text-midnight/60 leading-loose max-w-md">
+              Our proprietary selection engine analyses your brand DNA — mood, audience, market — to surface the models who statistically align with your aspirations. Customisation, at the highest level.
+            </p>
+            <Link to="/ai-discovery" className="inline-block mt-10 text-[10px] uppercase tracking-[0.3em] font-bold text-terra-bronze border-b border-terra-bronze pb-1 hover:text-burgundy hover:border-burgundy transition-colors">
+              Explore AI Discovery →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-midnight py-24 md:py-32 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-end mb-16 border-b border-cream/10 pb-6">
+            <div>
+              <span className="text-terra-mid text-[10px] uppercase tracking-[0.3em] font-bold">The Roster</span>
+              <h2 className="font-serif text-cream text-5xl md:text-6xl mt-3">The Faces.</h2>
+            </div>
+            <Link to="/talent" className="text-terra-light text-[10px] uppercase tracking-[0.25em] font-bold border-b border-terra-mid pb-1 hover:text-cream transition-colors">
+              View All Models →
+            </Link>
+          </div>
+          <div className="grid md:grid-cols-3 gap-10 md:gap-8">
+            {featured.map((m, i) => (
+              <div key={m.slug} className={`group cursor-pointer ${i === 1 ? "md:mt-24" : ""}`}>
+                <div className="aspect-[3/4] overflow-hidden bg-cream/5 mb-5 relative">
+                  <img src={m.image} alt={m.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]" />
+                </div>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="font-serif text-2xl italic text-terra-mid group-hover:text-terra-light transition-colors">{m.name}</h3>
+                    <p className="text-cream/40 text-[10px] uppercase tracking-[0.25em] mt-1">{m.placement}</p>
+                  </div>
+                  <div className="text-cream/60 text-[10px] uppercase tracking-[0.18em] leading-relaxed font-light text-right">
+                    HT {m.height}<br />
+                    B {m.bust} · W {m.waist} · H {m.hips}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 md:py-32 px-6 md:px-12">
+        <div className="max-w-5xl mx-auto p-10 md:p-20 bg-terra-light text-midnight">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="text-terra-bronze text-[10px] uppercase tracking-[0.3em] font-bold">Philosophy</span>
+              <h2 className="font-serif text-4xl md:text-5xl mt-4 mb-6 italic leading-tight">
+                The Premium Royal Standard.
+              </h2>
+              <p className="leading-relaxed opacity-80 max-w-md">
+                We don't just provide talent; we craft the visual identity of luxury. From placement to social media management, Kaslyn is the bridge between vision and iconic reality.
+              </p>
+            </div>
+            <div className="space-y-4 text-[10px] uppercase tracking-[0.25em] font-bold">
+              {[
+                "Model Placement",
+                "Brand Marketing",
+                "Social Management",
+                "Video Production",
+                "Editorial Direction",
+                "AI Talent Discovery",
+              ].map((s) => (
+                <div key={s} className="flex items-center gap-4">
+                  <div className="w-10 h-px bg-midnight/40" />
+                  <span>{s}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <SiteFooter />
+    </div>
+  );
+}
