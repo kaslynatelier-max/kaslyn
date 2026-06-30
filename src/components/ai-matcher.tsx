@@ -10,7 +10,7 @@ interface MatchResult {
   matches: { slug: string; score: number; reasoning: string }[];
 }
 
-export function AiMatcher({ variant = "light" }: { variant?: "light" | "dark" }) {
+export function AiMatcher({ variant = "light" }: { variant?: "light" | "dark" | "terra" }) {
   const fn = useServerFn(matchModels);
   const [brief, setBrief] = useState("");
   const [mood, setMood] = useState<string[]>(["High Fashion"]);
@@ -40,18 +40,23 @@ export function AiMatcher({ variant = "light" }: { variant?: "light" | "dark" })
   }
 
   const isDark = variant === "dark";
+  const isTerra = variant === "terra";
   const panelBase = isDark
     ? "bg-midnight/60 border border-cream/10 text-cream"
-    : "bg-terra-light/30 border border-terra-mid/15 text-midnight";
+    : isTerra
+      ? "bg-terra-mid border border-terra-bronze/30 text-cream"
+      : "bg-terra-light/30 border border-terra-mid/15 text-midnight";
   const inputBase = isDark
     ? "bg-midnight border border-cream/15 text-cream placeholder:text-cream/30 focus:border-terra-mid"
-    : "bg-cream border border-midnight/10 text-midnight placeholder:text-midnight/30 focus:border-terra-mid";
+    : isTerra
+      ? "bg-terra-bronze/40 border border-cream/20 text-cream placeholder:text-cream/50 focus:border-cream"
+      : "bg-cream border border-midnight/10 text-midnight placeholder:text-midnight/30 focus:border-terra-mid";
 
   return (
     <div className={`p-8 md:p-10 ${panelBase}`}>
       <div className="flex items-center gap-3 mb-8">
         <span className="w-2 h-2 rounded-full bg-burgundy animate-pulse" />
-        <h3 className="font-serif text-2xl md:text-3xl">AI Talent Matcher</h3>
+        <h3 className="font-serif text-2xl md:text-3xl">Talent Matcher</h3>
       </div>
 
       <form onSubmit={onSubmit} className="space-y-6">

@@ -167,10 +167,19 @@
   to { clip-path: inset(0 0 0 0); opacity: 1; }
 }
 
+@keyframes kenburns {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.12) translate(-2%, -2%); }
+}
+
 @utility animate-fade-up {
   animation: fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @utility animate-curtain {
   animation: curtain 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-kenburns {
+  animation: kenburns 12s ease-out both;
 }
