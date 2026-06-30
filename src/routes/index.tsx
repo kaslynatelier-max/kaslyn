@@ -1,9 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { AiMatcher } from "@/components/ai-matcher";
 import { MODELS } from "@/lib/models";
 import heroVideo from "@/assets/kaslyn-hero.mp4.asset.json";
+import hero1 from "@/assets/hero-1.jpg";
+import hero2 from "@/assets/hero-2.jpg";
+import hero3 from "@/assets/hero-3.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,34 +23,44 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const featured = MODELS.slice(0, 3);
+  const heroImages = [hero1, hero2, hero3];
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % heroImages.length), 6000);
+    return () => clearInterval(t);
+  }, []);
   return (
     <div className="bg-cream text-midnight">
       <div className="relative">
         <SiteNav variant="dark" />
         <section className="relative h-screen min-h-[700px] w-full bg-midnight overflow-hidden">
-          <video
-            src={heroVideo.url}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-60 animate-curtain"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-midnight/40 via-transparent to-midnight" />
+          {heroImages.map((src, i) => (
+            <img
+              key={src}
+              src={src}
+              alt=""
+              fetchPriority={i === 0 ? "high" : "low"}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${
+                idx === i ? "opacity-70 animate-kenburns" : "opacity-0"
+              }`}
+            />
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-b from-midnight/70 via-midnight/40 to-midnight" />
+          <div className="absolute inset-0 bg-gradient-to-r from-midnight/70 via-midnight/20 to-transparent" />
           <div className="relative z-10 h-full flex items-center px-6 md:px-20">
             <div className="max-w-4xl animate-fade-up">
-              <p className="text-cream/70 text-[10px] uppercase tracking-[0.4em] mb-6">An Atelier of Presence — Est. Mumbai</p>
+              <p className="text-cream/80 text-[10px] uppercase tracking-[0.4em] mb-6">An Atelier of Presence — Est. Mumbai</p>
               <h1 className="font-serif text-cream text-5xl md:text-8xl lg:text-9xl leading-[0.95] italic">
                 Refining the<br />
                 <span className="not-italic text-terra-light">Art of Influence.</span>
               </h1>
               <div className="mt-12 flex flex-col md:flex-row md:items-end gap-8 max-w-2xl">
-                <p className="text-cream/70 text-sm md:text-base leading-relaxed tracking-wide max-w-md">
-                  Kaslyn Atelier merges traditional placement with AI-driven talent discovery, ensuring every campaign resonates with surgical precision and royal elegance.
+                <p className="text-cream/90 text-sm md:text-base leading-relaxed tracking-wide max-w-md drop-shadow">
+                  Kaslyn merges traditional placement with AI-driven talent discovery, ensuring every campaign resonates with surgical precision and royal elegance.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 shrink-0">
                   <Link to="/ai-discovery" className="px-8 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
-                    Launch AI Selector
+                    Launch Selector
                   </Link>
                   <Link to="/talent" className="px-8 py-4 border border-cream/40 text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
                     View Portfolio
@@ -62,12 +76,13 @@ function HomePage() {
         </section>
       </div>
 
-      <section className="py-24 md:py-32 px-6 md:px-12 bg-cream">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
-          <div className="order-2 lg:order-1">
-            <AiMatcher />
+      {/* Second section: Atelier reel video + Data-Driven copy */}
+      <section className="py-20 md:py-32 px-6 md:px-12 bg-cream">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="aspect-[4/5] w-full overflow-hidden bg-midnight">
+            <video src={heroVideo.url} autoPlay muted loop playsInline className="w-full h-full object-cover" />
           </div>
-          <div className="order-1 lg:order-2">
+          <div>
             <span className="text-terra-mid font-bold uppercase tracking-[0.3em] text-[10px]">Modern Innovation</span>
             <h2 className="font-serif text-4xl md:text-6xl mt-4 mb-6 leading-[1.05]">
               Data-Driven Beauty,<br />Tailored to You.
@@ -76,9 +91,20 @@ function HomePage() {
               Our proprietary selection engine analyses your brand DNA — mood, audience, market — to surface the models who statistically align with your aspirations. Customisation, at the highest level.
             </p>
             <Link to="/ai-discovery" className="inline-block mt-10 text-[10px] uppercase tracking-[0.3em] font-bold text-terra-bronze border-b border-terra-bronze pb-1 hover:text-burgundy hover:border-burgundy transition-colors">
-              Explore AI Discovery →
+              Explore Discovery →
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Talent Matcher on terracotta orange */}
+      <section className="py-24 md:py-32 px-6 md:px-12 bg-terra-mid">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-cream/80 font-bold uppercase tracking-[0.3em] text-[10px]">Curated In Seconds</span>
+            <h2 className="font-serif text-4xl md:text-6xl mt-4 text-cream italic">Find your face.</h2>
+          </div>
+          <AiMatcher variant="terra" />
         </div>
       </section>
 
@@ -115,15 +141,17 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="py-24 md:py-32 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto p-10 md:p-20 bg-terra-light text-midnight">
+      {/* Philosophy / What we do — ORANGE bg per spec, sits BEFORE model roster section */}
+      {null}
+      <section className="py-24 md:py-32 px-6 md:px-12 bg-cream">
+        <div className="max-w-5xl mx-auto p-10 md:p-20 bg-terra-bronze text-cream">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-terra-bronze text-[10px] uppercase tracking-[0.3em] font-bold">Philosophy</span>
+              <span className="text-terra-light text-[10px] uppercase tracking-[0.3em] font-bold">Philosophy</span>
               <h2 className="font-serif text-4xl md:text-5xl mt-4 mb-6 italic leading-tight">
                 The Premium Royal Standard.
               </h2>
-              <p className="leading-relaxed opacity-80 max-w-md">
+              <p className="leading-relaxed opacity-90 max-w-md">
                 We don't just provide talent; we craft the visual identity of luxury. From placement to social media management, Kaslyn is the bridge between vision and iconic reality.
               </p>
             </div>
@@ -134,10 +162,10 @@ function HomePage() {
                 "Social Management",
                 "Video Production",
                 "Editorial Direction",
-                "AI Talent Discovery",
+                "Talent Discovery",
               ].map((s) => (
                 <div key={s} className="flex items-center gap-4">
-                  <div className="w-10 h-px bg-midnight/40" />
+                  <div className="w-10 h-px bg-cream/40" />
                   <span>{s}</span>
                 </div>
               ))}
