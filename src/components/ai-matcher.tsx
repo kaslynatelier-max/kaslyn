@@ -51,7 +51,7 @@ export function AiMatcher({ variant = "light" }: { variant?: "light" | "dark" })
     <div className={`p-8 md:p-10 ${panelBase}`}>
       <div className="flex items-center gap-3 mb-8">
         <span className="w-2 h-2 rounded-full bg-burgundy animate-pulse" />
-        <h3 className="font-serif text-2xl md:text-3xl">AI Talent Matcher</h3>
+        <h3 className="font-serif text-2xl md:text-3xl">Talent Matcher</h3>
       </div>
 
       <form onSubmit={onSubmit} className="space-y-6">

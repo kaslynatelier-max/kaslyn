@@ -5,9 +5,7 @@ export function SiteFooter() {
     <footer className="bg-midnight text-cream pt-20 pb-10 px-6 md:px-12">
       <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-16">
         <div className="md:col-span-2 space-y-6">
-          <div className="font-serif text-3xl tracking-tight">
-            KASLYN <span className="text-terra-mid">ATELIER</span>
-          </div>
+          <div className="font-serif text-3xl tracking-[0.25em] font-bold">KASLYN</div>
           <p className="text-sm text-cream/60 max-w-sm leading-relaxed">
             A luxury modeling atelier. Editorial casting, brand campaigns, runway, and AI-driven talent discovery — for houses that demand presence.
           </p>
@@ -17,8 +15,10 @@ export function SiteFooter() {
           <ul className="space-y-2 text-sm text-cream/60">
             <li><Link to="/talent" className="hover:text-cream">Talent</Link></li>
             <li><Link to="/services" className="hover:text-cream">Services</Link></li>
-            <li><Link to="/ai-discovery" className="hover:text-cream">AI Discovery</Link></li>
+            <li><Link to="/portfolio" className="hover:text-cream">Portfolio</Link></li>
+            <li><Link to="/ai-discovery" className="hover:text-cream">Discovery</Link></li>
             <li><Link to="/contact" className="hover:text-cream">Bookings</Link></li>
+            <li><Link to="/auth" className="hover:text-cream">Sign In</Link></li>
           </ul>
         </div>
         <div className="space-y-4">
