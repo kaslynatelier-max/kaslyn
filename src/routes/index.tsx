@@ -12,10 +12,11 @@ import hero3 from "@/assets/hero-3.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Kaslyn Atelier — Luxury Modeling Agency" },
-      { name: "description", content: "Kaslyn Atelier curates women for editorial, runway, and brand campaigns — with AI-driven talent discovery." },
-      { property: "og:title", content: "Kaslyn Atelier — Luxury Modeling Agency" },
-      { property: "og:description", content: "Curating the future of presence. Editorial, runway, and AI-driven talent." },
+      { title: "Kaslyn — Luxury Modeling Agency, Mumbai" },
+      { name: "description", content: "Kaslyn curates women for editorial, runway, and luxury brand campaigns. Talent placement, brand marketing, and AI-driven discovery." },
+      { property: "og:title", content: "Kaslyn — Luxury Modeling Agency" },
+      { property: "og:description", content: "Editorial casting, brand campaigns and AI-driven talent discovery." },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: HomePage,
@@ -41,42 +42,42 @@ function HomePage() {
               alt=""
               fetchPriority={i === 0 ? "high" : "low"}
               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${
-                idx === i ? "opacity-70 animate-kenburns" : "opacity-0"
+                idx === i ? "opacity-80 animate-kenburns" : "opacity-0"
               }`}
             />
           ))}
-          <div className="absolute inset-0 bg-gradient-to-b from-midnight/70 via-midnight/40 to-midnight" />
-          <div className="absolute inset-0 bg-gradient-to-r from-midnight/70 via-midnight/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-midnight/75 via-midnight/35 to-midnight" />
+          <div className="absolute inset-0 bg-gradient-to-r from-midnight/80 via-midnight/20 to-transparent" />
           <div className="relative z-10 h-full flex items-center px-6 md:px-20">
             <div className="max-w-4xl animate-fade-up">
-              <p className="text-cream/80 text-[10px] uppercase tracking-[0.4em] mb-6">An Atelier of Presence — Est. Mumbai</p>
-              <h1 className="font-serif text-cream text-5xl md:text-8xl lg:text-9xl leading-[0.95] italic">
+              <p className="text-cream/85 text-[10px] uppercase tracking-[0.4em] mb-6">An Atelier of Presence — Est. Mumbai</p>
+              <h1 className="font-serif text-cream text-5xl md:text-8xl lg:text-9xl leading-[0.95] italic drop-shadow-2xl">
                 Refining the<br />
                 <span className="not-italic text-terra-light">Art of Influence.</span>
               </h1>
               <div className="mt-12 flex flex-col md:flex-row md:items-end gap-8 max-w-2xl">
-                <p className="text-cream/90 text-sm md:text-base leading-relaxed tracking-wide max-w-md drop-shadow">
+                <p className="text-cream text-sm md:text-base leading-relaxed tracking-wide max-w-md drop-shadow">
                   Kaslyn merges traditional placement with AI-driven talent discovery, ensuring every campaign resonates with surgical precision and royal elegance.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 shrink-0">
                   <Link to="/ai-discovery" className="px-8 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
                     Launch Selector
                   </Link>
-                  <Link to="/talent" className="px-8 py-4 border border-cream/40 text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
+                  <Link to="/talent" className="px-8 py-4 border border-cream/60 text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
                     View Portfolio
                   </Link>
                 </div>
               </div>
             </div>
           </div>
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-cream/50 text-[10px] uppercase tracking-[0.4em] flex flex-col items-center gap-2">
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-cream/60 text-[10px] uppercase tracking-[0.4em] flex flex-col items-center gap-2">
             <span>Scroll</span>
-            <div className="w-px h-10 bg-cream/30" />
+            <div className="w-px h-10 bg-cream/40" />
           </div>
         </section>
       </div>
 
-      {/* Second section: Atelier reel video + Data-Driven copy */}
+      {/* Section 2: Atelier reel video + Data-Driven copy */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-cream">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div className="aspect-[4/5] w-full overflow-hidden bg-midnight">
@@ -97,7 +98,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Talent Matcher on terracotta orange */}
+      {/* Talent Matcher — orange bg */}
       <section className="py-24 md:py-32 px-6 md:px-12 bg-terra-mid">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
@@ -105,6 +106,31 @@ function HomePage() {
             <h2 className="font-serif text-4xl md:text-6xl mt-4 text-cream italic">Find your face.</h2>
           </div>
           <AiMatcher variant="terra" />
+        </div>
+      </section>
+
+      {/* Philosophy / What we do — orange bg, BEFORE roster */}
+      <section className="py-24 md:py-32 px-6 md:px-12 bg-cream">
+        <div className="max-w-5xl mx-auto p-10 md:p-20 bg-terra-bronze text-cream">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="text-terra-light text-[10px] uppercase tracking-[0.3em] font-bold">Philosophy</span>
+              <h2 className="font-serif text-4xl md:text-5xl mt-4 mb-6 italic leading-tight">
+                The Premium Royal Standard.
+              </h2>
+              <p className="leading-relaxed opacity-90 max-w-md">
+                We don't just provide talent; we craft the visual identity of luxury. From placement to social media management, Kaslyn is the bridge between vision and iconic reality.
+              </p>
+            </div>
+            <div className="space-y-4 text-[10px] uppercase tracking-[0.25em] font-bold">
+              {["Model Placement","Brand Marketing","Social Management","Video Production","Editorial Direction","Talent Discovery"].map((s) => (
+                <div key={s} className="flex items-center gap-4">
+                  <div className="w-10 h-px bg-cream/40" />
+                  <span>{s}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -137,39 +163,6 @@ function HomePage() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Philosophy / What we do — ORANGE bg per spec, sits BEFORE model roster section */}
-      {null}
-      <section className="py-24 md:py-32 px-6 md:px-12 bg-cream">
-        <div className="max-w-5xl mx-auto p-10 md:p-20 bg-terra-bronze text-cream">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="text-terra-light text-[10px] uppercase tracking-[0.3em] font-bold">Philosophy</span>
-              <h2 className="font-serif text-4xl md:text-5xl mt-4 mb-6 italic leading-tight">
-                The Premium Royal Standard.
-              </h2>
-              <p className="leading-relaxed opacity-90 max-w-md">
-                We don't just provide talent; we craft the visual identity of luxury. From placement to social media management, Kaslyn is the bridge between vision and iconic reality.
-              </p>
-            </div>
-            <div className="space-y-4 text-[10px] uppercase tracking-[0.25em] font-bold">
-              {[
-                "Model Placement",
-                "Brand Marketing",
-                "Social Management",
-                "Video Production",
-                "Editorial Direction",
-                "Talent Discovery",
-              ].map((s) => (
-                <div key={s} className="flex items-center gap-4">
-                  <div className="w-10 h-px bg-cream/40" />
-                  <span>{s}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
