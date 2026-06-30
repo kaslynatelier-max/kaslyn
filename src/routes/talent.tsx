@@ -1,8 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { ModelCard } from "@/components/model-card";
 import { MODELS } from "@/lib/models";
+import { listPublicProfiles } from "@/lib/profiles.functions";
 
 export const Route = createFileRoute("/talent")({
   head: () => ({
@@ -17,6 +20,9 @@ export const Route = createFileRoute("/talent")({
 });
 
 function TalentPage() {
+  const fetchUsers = useServerFn(listPublicProfiles);
+  const [users, setUsers] = useState<Array<{ id: string; full_name?: string | null; city?: string | null; height_cm?: number | null; bio?: string | null; avatar_url?: string | null }>>([]);
+  useEffect(() => { fetchUsers().then(setUsers).catch(() => {}); }, [fetchUsers]);
   return (
     <div className="min-h-screen bg-cream text-midnight">
       <SiteNav />
@@ -34,6 +40,22 @@ function TalentPage() {
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-x-8 md:gap-y-16">
           {MODELS.map((m, i) => (
             <ModelCard key={m.slug} model={m} offset={i % 3 === 1} />
+          ))}
+          {users.map((u) => (
+            <div key={u.id} className="group">
+              <div className="aspect-[3/4] overflow-hidden bg-midnight mb-5">
+                {u.avatar_url ? <img src={u.avatar_url} alt={u.full_name ?? ""} loading="lazy" className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-[1.04]" /> : <div className="w-full h-full flex items-center justify-center font-serif text-5xl italic text-cream/40">{(u.full_name ?? "?").charAt(0)}</div>}
+              </div>
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="font-serif text-2xl italic text-terra-bronze">{u.full_name ?? "Anonymous"}</h3>
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-foreground/50 mt-1">{u.city ?? "—"}</p>
+                </div>
+                <div className="text-right text-[10px] uppercase tracking-[0.18em] text-foreground/60 font-light">
+                  {u.height_cm ? `HT ${u.height_cm} cm` : ""}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </section>

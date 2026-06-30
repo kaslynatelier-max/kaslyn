@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { submitRequest } from "@/lib/requests.functions";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -16,7 +18,22 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const send = useServerFn(submitRequest);
   const [sent, setSent] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({ name: "", brand: "", email: "", project_type: "Editorial", brief: "" });
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setErr(null); setLoading(true);
+    try {
+      await send({ data: form });
+      setSent(true);
+    } catch (e2) {
+      setErr(e2 instanceof Error ? e2.message : "Could not send. Please retry.");
+    } finally { setLoading(false); }
+  }
   return (
     <div className="min-h-screen bg-cream text-midnight">
       <SiteNav />
@@ -44,10 +61,7 @@ function ContactPage() {
             </div>
           </div>
 
-          <form
-            onSubmit={(e) => { e.preventDefault(); setSent(true); }}
-            className="bg-midnight text-cream p-8 md:p-12 space-y-6"
-          >
+          <form onSubmit={submit} className="bg-midnight text-cream p-8 md:p-12 space-y-6">
             {sent ? (
               <div className="py-20 text-center space-y-4">
                 <h3 className="font-serif text-3xl italic">Thank you.</h3>
@@ -55,23 +69,21 @@ function ContactPage() {
               </div>
             ) : (
               <>
-                {[
-                  { id: "name", label: "Name", type: "text" },
-                  { id: "brand", label: "Brand / Company", type: "text" },
-                  { id: "email", label: "Email", type: "email" },
-                ].map((f) => (
-                  <div key={f.id}>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-terra-light block mb-2">{f.label}</label>
-                    <input
-                      required
-                      type={f.type}
-                      className="w-full bg-transparent border-b border-cream/20 py-3 text-cream focus:outline-none focus:border-terra-mid"
-                    />
-                  </div>
-                ))}
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.25em] text-terra-light block mb-2">Name</label>
+                  <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full bg-transparent border-b border-cream/20 py-3 text-cream focus:outline-none focus:border-terra-mid" />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.25em] text-terra-light block mb-2">Brand / Company</label>
+                  <input value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })} className="w-full bg-transparent border-b border-cream/20 py-3 text-cream focus:outline-none focus:border-terra-mid" />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.25em] text-terra-light block mb-2">Email</label>
+                  <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full bg-transparent border-b border-cream/20 py-3 text-cream focus:outline-none focus:border-terra-mid" />
+                </div>
                 <div>
                   <label className="text-[10px] uppercase tracking-[0.25em] text-terra-light block mb-2">Project Type</label>
-                  <select className="w-full bg-transparent border-b border-cream/20 py-3 text-cream focus:outline-none focus:border-terra-mid">
+                  <select value={form.project_type} onChange={(e) => setForm({ ...form, project_type: e.target.value })} className="w-full bg-transparent border-b border-cream/20 py-3 text-cream focus:outline-none focus:border-terra-mid">
                     {["Editorial", "Brand Campaign", "Runway", "Film / Video", "Social Content", "Other"].map((o) => (
                       <option key={o} className="bg-midnight">{o}</option>
                     ))}
@@ -79,10 +91,11 @@ function ContactPage() {
                 </div>
                 <div>
                   <label className="text-[10px] uppercase tracking-[0.25em] text-terra-light block mb-2">Brief</label>
-                  <textarea rows={5} required className="w-full bg-transparent border-b border-cream/20 py-3 text-cream focus:outline-none focus:border-terra-mid resize-none" />
+                  <textarea rows={5} required value={form.brief} onChange={(e) => setForm({ ...form, brief: e.target.value })} className="w-full bg-transparent border-b border-cream/20 py-3 text-cream focus:outline-none focus:border-terra-mid resize-none" />
                 </div>
-                <button type="submit" className="w-full mt-4 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors">
-                  Submit Casting Brief
+                {err && <p className="text-[11px] uppercase tracking-[0.2em] text-burgundy">{err}</p>}
+                <button disabled={loading} type="submit" className="w-full mt-4 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors disabled:opacity-50">
+                  {loading ? "Sending…" : "Submit Casting Brief"}
                 </button>
               </>
             )}

@@ -95,11 +95,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "canonical", href: "https://kaslynatelier.co.in/" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400;1,6..96,700&family=Montserrat:wght@300;400;500;600&display=swap",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Kaslyn Atelier",
+          url: "https://kaslynatelier.co.in",
+          logo: "https://kaslynatelier.co.in/favicon.ico",
+          sameAs: ["https://instagram.com/kaslynatelier"],
+          address: { "@type": "PostalAddress", addressLocality: "Mumbai", addressCountry: "IN" },
+          email: "booking@kaslynatelier.co.in",
+        }),
       },
     ],
   }),
