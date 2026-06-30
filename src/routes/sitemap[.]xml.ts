@@ -6,9 +6,11 @@ const BASE_URL = "https://kaslynatelier.co.in";
 const entries = [
   { path: "/", priority: "1.0", changefreq: "weekly" as const },
   { path: "/talent", priority: "0.9", changefreq: "weekly" as const },
+  { path: "/portfolio", priority: "0.8", changefreq: "monthly" as const },
   { path: "/services", priority: "0.8", changefreq: "monthly" as const },
-  { path: "/ai-discovery", priority: "0.8", changefreq: "monthly" as const },
+  { path: "/ai-discovery", priority: "0.7", changefreq: "monthly" as const },
   { path: "/contact", priority: "0.6", changefreq: "monthly" as const },
+  { path: "/auth", priority: "0.3", changefreq: "yearly" as const },
 ];
 
 export const Route = createFileRoute("/sitemap.xml")({
