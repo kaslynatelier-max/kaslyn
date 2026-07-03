@@ -57,7 +57,7 @@ export const listPublicProfiles = createServerFn({ method: "GET" }).handler(asyn
   );
   const { data, error } = await supabasePublic
     .from("profiles")
-    .select("id, full_name, city, height_cm, bio, avatar_url, cover_url, instagram")
+    .select("id, roster_code, city, avatar_url, cover_url")
     .eq("is_public", true)
     .eq("approved", true)
     .order("created_at", { ascending: false })

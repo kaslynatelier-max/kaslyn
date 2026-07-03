@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_notifications: {
+        Row: {
+          body: string
+          created_at: string
+          error: string | null
+          id: string
+          kind: string
+          sent: boolean
+          sent_at: string | null
+          subject: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind: string
+          sent?: boolean
+          sent_at?: string | null
+          subject: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          sent?: boolean
+          sent_at?: string | null
+          subject?: string
+        }
+        Relationships: []
+      }
       client_requests: {
         Row: {
           admin_reply: string | null
@@ -56,6 +89,42 @@ export type Database = {
         }
         Relationships: []
       }
+      profile_field_defs: {
+        Row: {
+          created_at: string
+          field_type: string
+          id: string
+          key: string
+          label: string
+          options: Json | null
+          required: boolean
+          show_in_roster: boolean
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          field_type?: string
+          id?: string
+          key: string
+          label: string
+          options?: Json | null
+          required?: boolean
+          show_in_roster?: boolean
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          field_type?: string
+          id?: string
+          key?: string
+          label?: string
+          options?: Json | null
+          required?: boolean
+          show_in_roster?: boolean
+          sort_order?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age: number | null
@@ -65,6 +134,7 @@ export type Database = {
           city: string | null
           cover_url: string | null
           created_at: string
+          custom_fields: Json
           email: string | null
           eyes: string | null
           full_name: string | null
@@ -75,8 +145,10 @@ export type Database = {
           is_public: boolean
           phone: string | null
           preferences: Json
+          roster_code: string | null
           skin_tone: string | null
           updated_at: string
+          weight_kg: number | null
         }
         Insert: {
           age?: number | null
@@ -86,6 +158,7 @@ export type Database = {
           city?: string | null
           cover_url?: string | null
           created_at?: string
+          custom_fields?: Json
           email?: string | null
           eyes?: string | null
           full_name?: string | null
@@ -96,8 +169,10 @@ export type Database = {
           is_public?: boolean
           phone?: string | null
           preferences?: Json
+          roster_code?: string | null
           skin_tone?: string | null
           updated_at?: string
+          weight_kg?: number | null
         }
         Update: {
           age?: number | null
@@ -107,6 +182,7 @@ export type Database = {
           city?: string | null
           cover_url?: string | null
           created_at?: string
+          custom_fields?: Json
           email?: string | null
           eyes?: string | null
           full_name?: string | null
@@ -117,7 +193,36 @@ export type Database = {
           is_public?: boolean
           phone?: string | null
           preferences?: Json
+          roster_code?: string | null
           skin_tone?: string | null
+          updated_at?: string
+          weight_kg?: number | null
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          admin_notify_email: string
+          developer_credit_name: string
+          developer_credit_url: string
+          id: boolean
+          roster_visible_fields: Json
+          updated_at: string
+        }
+        Insert: {
+          admin_notify_email?: string
+          developer_credit_name?: string
+          developer_credit_url?: string
+          id?: boolean
+          roster_visible_fields?: Json
+          updated_at?: string
+        }
+        Update: {
+          admin_notify_email?: string
+          developer_credit_name?: string
+          developer_credit_url?: string
+          id?: boolean
+          roster_visible_fields?: Json
           updated_at?: string
         }
         Relationships: []
@@ -148,6 +253,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_roster_code: { Args: never; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -157,7 +263,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "model" | "client"
+      app_role: "admin" | "model" | "client" | "super_admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -285,7 +391,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "model", "client"],
+      app_role: ["admin", "model", "client", "super_admin"],
     },
   },
 } as const
