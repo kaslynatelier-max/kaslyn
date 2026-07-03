@@ -124,13 +124,16 @@ export function AiMatcher({ variant = "light" }: { variant?: "light" | "dark" | 
               return (
                 <div key={m.slug} className="space-y-3">
                   <div className="aspect-[3/4] overflow-hidden bg-midnight relative">
-                    <img src={model.image} alt={model.name} loading="lazy" className="w-full h-full object-cover" />
-                    <div className="absolute top-3 right-3 bg-cream text-midnight text-[10px] font-bold px-2 py-1 tracking-widest">
+                    <img src={model.image} alt={model.code} loading="lazy" className="w-full h-full object-cover" />
+                    <div className="absolute top-3 left-3 bg-cream/95 text-midnight text-[10px] font-bold px-2 py-1 tracking-[0.2em]">
+                      {model.code}
+                    </div>
+                    <div className="absolute top-3 right-3 bg-terra-bronze text-cream text-[10px] font-bold px-2 py-1 tracking-widest">
                       {Math.round(m.score)}%
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-serif text-xl italic text-terra-bronze">{model.name}</h4>
+                    <h4 className="font-serif text-xl italic text-terra-bronze">{model.code}</h4>
                     <p className="text-[10px] uppercase tracking-[0.2em] opacity-60 mt-0.5">{model.city}</p>
                     <p className="text-xs leading-relaxed mt-2 opacity-80">{m.reasoning}</p>
                   </div>

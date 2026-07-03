@@ -38,6 +38,17 @@ export function SiteFooter() {
           <a href="#" className="hover:text-cream">Privacy</a>
         </div>
       </div>
+      <div className="max-w-7xl mx-auto mt-6 text-center text-[10px] uppercase tracking-[0.3em] text-cream/50">
+        Developed by{" "}
+        <a
+          href="https://www.FranckMbogne.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-terra-mid hover:text-cream underline underline-offset-4"
+        >
+          Engineer Franck MBOGNE
+        </a>
+      </div>
     </footer>
   );
 }

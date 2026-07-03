@@ -8,6 +8,7 @@ import leilaImg from "@/assets/model-leila.jpg";
 export interface Model {
   slug: string;
   name: string;
+  code: string;
   image: string;
   placement: string;
   city: string;
@@ -24,6 +25,7 @@ export interface Model {
 export const MODELS: Model[] = [
   {
     slug: "elena-v",
+    code: "KAS#0A",
     name: "Elena V.",
     image: elenaImg,
     placement: "Vogue · Cartier · Bottega",
@@ -39,6 +41,7 @@ export const MODELS: Model[] = [
   },
   {
     slug: "sienna-r",
+    code: "KAS#0B",
     name: "Sienna R.",
     image: siennaImg,
     placement: "Dior · Elle · Sabyasachi",
@@ -54,6 +57,7 @@ export const MODELS: Model[] = [
   },
   {
     slug: "anya-k",
+    code: "KAS#0C",
     name: "Anya K.",
     image: anyaImg,
     placement: "Chanel · Gucci · Aesop",
@@ -69,6 +73,7 @@ export const MODELS: Model[] = [
   },
   {
     slug: "maya-d",
+    code: "KAS#0D",
     name: "Maya D.",
     image: mayaImg,
     placement: "Valentino · Vogue India · Tod's",
@@ -84,6 +89,7 @@ export const MODELS: Model[] = [
   },
   {
     slug: "noor-a",
+    code: "KAS#0E",
     name: "Noor A.",
     image: noorImg,
     placement: "Saint Laurent · Prada · i-D",
@@ -99,6 +105,7 @@ export const MODELS: Model[] = [
   },
   {
     slug: "leila-h",
+    code: "KAS#0F",
     name: "Leila H.",
     image: leilaImg,
     placement: "Hermès · Estée Lauder · Vogue",

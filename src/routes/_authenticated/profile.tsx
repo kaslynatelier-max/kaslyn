@@ -28,6 +28,9 @@ function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [newPwd, setNewPwd] = useState("");
+  const [pwdMsg, setPwdMsg] = useState<string | null>(null);
+  const [pwdLoading, setPwdLoading] = useState(false);
 
   useEffect(() => {
     fetchProfile().then((res) => { setProfile(res.profile as Profile); setRoles(res.roles); });
@@ -86,6 +89,15 @@ function ProfilePage() {
   async function logout() {
     await supabase.auth.signOut();
     navigate({ to: "/" });
+  }
+
+  async function changePassword() {
+    if (newPwd.length < 6) { setPwdMsg("Password must be at least 6 characters."); return; }
+    setPwdLoading(true); setPwdMsg(null);
+    const { error } = await supabase.auth.updateUser({ password: newPwd });
+    setPwdLoading(false);
+    if (error) setPwdMsg(error.message);
+    else { setPwdMsg("Password updated."); setNewPwd(""); }
   }
 
   if (!profile) return <div className="min-h-screen flex items-center justify-center bg-cream text-midnight"><p className="font-serif italic">Loading profile…</p></div>;
@@ -160,6 +172,27 @@ function ProfilePage() {
             Sign out
           </button>
           {msg && <p className="text-sm text-terra-bronze">{msg}</p>}
+        </div>
+
+        <div className="mt-4 pb-24 border-t border-midnight/10 pt-10">
+          <h2 className="font-serif text-2xl italic mb-4">Change password</h2>
+          <div className="flex flex-col sm:flex-row gap-3 max-w-lg">
+            <input
+              type="password"
+              value={newPwd}
+              onChange={(e) => setNewPwd(e.target.value)}
+              placeholder="New password (min 6 chars)"
+              className="flex-1 bg-cream border border-midnight/15 p-3 focus:outline-none focus:border-terra-bronze"
+            />
+            <button
+              onClick={changePassword}
+              disabled={pwdLoading}
+              className="px-6 py-3 bg-burgundy text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-terra-bronze transition-colors disabled:opacity-50"
+            >
+              {pwdLoading ? "Updating…" : "Update password"}
+            </button>
+          </div>
+          {pwdMsg && <p className="mt-3 text-sm text-terra-bronze">{pwdMsg}</p>}
         </div>
       </section>
       <SiteFooter />

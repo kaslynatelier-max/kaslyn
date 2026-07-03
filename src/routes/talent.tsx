@@ -21,7 +21,7 @@ export const Route = createFileRoute("/talent")({
 
 function TalentPage() {
   const fetchUsers = useServerFn(listPublicProfiles);
-  const [users, setUsers] = useState<Array<{ id: string; full_name?: string | null; city?: string | null; height_cm?: number | null; bio?: string | null; avatar_url?: string | null }>>([]);
+  const [users, setUsers] = useState<Array<{ id: string; roster_code?: string | null; full_name?: string | null; city?: string | null; height_cm?: number | null; bio?: string | null; avatar_url?: string | null; cover_url?: string | null }>>([]);
   useEffect(() => { fetchUsers().then(setUsers).catch(() => {}); }, [fetchUsers]);
   return (
     <div className="min-h-screen bg-cream text-midnight">
@@ -31,7 +31,7 @@ function TalentPage() {
           <span className="text-terra-bronze text-[10px] uppercase tracking-[0.3em] font-bold">The Archive · No. 042</span>
           <h1 className="font-serif text-5xl md:text-8xl mt-4 leading-[0.95] italic">The Roster.</h1>
           <p className="mt-6 max-w-xl text-foreground/60 leading-relaxed">
-            Every face here was chosen for a specific kind of campaign — measured, deliberate, never auditioned in volume. Tap a card to begin a casting conversation.
+            Every face here was chosen for a specific kind of campaign. To protect our talent, identities are shown as anonymized reference codes — request a full introduction to unlock names, measurements, and books.
           </p>
         </div>
       </section>
@@ -44,15 +44,16 @@ function TalentPage() {
           {users.map((u) => (
             <div key={u.id} className="group">
               <div className="aspect-[3/4] overflow-hidden bg-midnight mb-5">
-                {u.avatar_url ? <img src={u.avatar_url} alt={u.full_name ?? ""} loading="lazy" className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-[1.04]" /> : <div className="w-full h-full flex items-center justify-center font-serif text-5xl italic text-cream/40">{(u.full_name ?? "?").charAt(0)}</div>}
+                {u.cover_url || u.avatar_url ? (
+                  <img src={u.cover_url ?? u.avatar_url ?? ""} alt={u.roster_code ?? "Model"} loading="lazy" className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-[1.04]" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center font-serif text-5xl italic text-cream/40">{u.roster_code ?? "KAS"}</div>
+                )}
               </div>
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-serif text-2xl italic text-terra-bronze">{u.full_name ?? "Anonymous"}</h3>
+                  <h3 className="font-serif text-2xl italic text-terra-bronze">{u.roster_code ?? "KAS#—"}</h3>
                   <p className="text-[10px] uppercase tracking-[0.25em] text-foreground/50 mt-1">{u.city ?? "—"}</p>
-                </div>
-                <div className="text-right text-[10px] uppercase tracking-[0.18em] text-foreground/60 font-light">
-                  {u.height_cm ? `HT ${u.height_cm} cm` : ""}
                 </div>
               </div>
             </div>
