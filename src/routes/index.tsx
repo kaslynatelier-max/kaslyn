@@ -98,14 +98,14 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Talent Matcher — orange bg */}
-      <section className="py-24 md:py-32 px-6 md:px-12 bg-terra-mid">
+      {/* Talent Matcher — clean white bg for maximum legibility */}
+      <section className="py-24 md:py-32 px-6 md:px-12 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-cream/80 font-bold uppercase tracking-[0.3em] text-[10px]">Curated In Seconds</span>
-            <h2 className="font-serif text-4xl md:text-6xl mt-4 text-cream italic">Find your face.</h2>
+            <span className="text-terra-bronze font-bold uppercase tracking-[0.3em] text-[10px]">Curated In Seconds</span>
+            <h2 className="font-sans text-4xl md:text-6xl mt-4 text-midnight font-semibold tracking-tight">Find your face.</h2>
           </div>
-          <AiMatcher variant="terra" />
+          <AiMatcher variant="white" />
         </div>
       </section>
 
