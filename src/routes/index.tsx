@@ -50,18 +50,17 @@ function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-midnight/80 via-midnight/20 to-transparent" />
           <div className="relative z-10 h-full flex items-center px-6 md:px-20">
             <div className="max-w-4xl animate-fade-up">
-              <p className="text-cream/85 text-[10px] uppercase tracking-[0.4em] mb-6">An Atelier of Presence — Est. Mumbai</p>
+              <p className="text-cream/85 text-[10px] uppercase tracking-[0.4em] mb-6">An Atelier of Presence — Hyderabad</p>
               <h1 className="font-serif text-cream text-5xl md:text-8xl lg:text-9xl leading-[0.95] italic drop-shadow-2xl">
                 Refining the<br />
                 <span className="not-italic text-terra-light">Art of Influence.</span>
               </h1>
               <div className="mt-12 flex flex-col md:flex-row md:items-end gap-8 max-w-2xl">
                 <p className="text-cream text-sm md:text-base leading-relaxed tracking-wide max-w-md drop-shadow">
-                  Kaslyn merges traditional placement with AI-driven talent discovery, ensuring every campaign resonates with surgical precision and royal elegance.
-                </p>
+                  Kaslyn bridges exceptional talent with visionary brands. From editorial to runway, we craft campaigns that leave a lasting impression.
                 <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-                  <Link to="/ai-discovery" className="px-8 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
-                    Launch Selector
+                  <Link to="/Casting" className="px-8 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
+                    Start Casting
                   </Link>
                   <Link to="/talent" className="px-8 py-4 border border-cream/60 text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
                     View Portfolio
@@ -86,13 +85,12 @@ function HomePage() {
           <div>
             <span className="text-terra-mid font-bold uppercase tracking-[0.3em] text-[10px]">Modern Innovation</span>
             <h2 className="font-serif text-4xl md:text-6xl mt-4 mb-6 leading-[1.05]">
-              Data-Driven Beauty,<br />Tailored to You.
+              Timeless Faces,<br />Endless possibilities.
             </h2>
             <p className="text-midnight/60 leading-loose max-w-md">
-              Our proprietary selection engine analyses your brand DNA — mood, audience, market — to surface the models who statistically align with your aspirations. Customisation, at the highest level.
-            </p>
-            <Link to="/ai-discovery" className="inline-block mt-10 text-[10px] uppercase tracking-[0.3em] font-bold text-terra-bronze border-b border-terra-bronze pb-1 hover:text-burgundy hover:border-burgundy transition-colors">
-              Explore Discovery →
+             We represent exceptional models and creative talent, connecting them with leading brands, fashion houses, and global campaigns. Every collaboration is built on elegance, professionalism, and lasting impact.</p>
+            <Link to="/Casting" className="inline-block mt-10 text-[10px] uppercase tracking-[0.3em] font-bold text-terra-bronze border-b border-terra-bronze pb-1 hover:text-burgundy hover:border-burgundy transition-colors">
+              Start Casting →
             </Link>
           </div>
         </div>

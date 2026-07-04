@@ -1,11 +1,23 @@
+/** @jsxRuntime classic */
+import React, { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { ModelCard } from "@/components/model-card";
 import { MODELS } from "@/lib/models";
 import { listPublicProfiles } from "@/lib/profiles.functions";
+
+type PublicProfile = {
+  id: string;
+  roster_code?: string | null;
+  full_name?: string | null;
+  city?: string | null;
+  height_cm?: number | null;
+  bio?: string | null;
+  avatar_url?: string | null;
+  cover_url?: string | null;
+};
 
 export const Route = createFileRoute("/talent")({
   head: () => ({
@@ -64,10 +76,10 @@ function TalentPage() {
       <section className="px-6 md:px-12 py-24 bg-midnight text-cream">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-serif text-4xl md:text-6xl italic leading-tight">Looking for someone we haven't shown?</h2>
-          <p className="mt-6 text-cream/60 max-w-xl mx-auto">Our extended roster spans 80+ exclusive faces. Use the AI Discovery brief to surface a private shortlist.</p>
+          <p className="mt-6 text-cream/60 max-w-xl mx-auto">Our extended roster spans 80+ exclusive faces. Use the talent matcher brief to surface a private shortlist.</p>
           <div className="mt-10 flex flex-col sm:flex-row justify-center gap-3">
-            <Link to="/ai-discovery" className="px-8 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors">Open AI Discovery</Link>
-            <Link to="/contact" className="px-8 py-4 border border-cream/30 text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors">Direct Casting</Link>
+            <Link to="/casting" className="px-8 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors">Start Casting</Link>
+            <Link to="/contact" className="px-8 py-4 border border-cream/30 text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors">Request talent</Link>
           </div>
         </div>
       </section>

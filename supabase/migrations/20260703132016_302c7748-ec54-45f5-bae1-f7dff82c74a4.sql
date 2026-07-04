@@ -47,7 +47,7 @@ UPDATE public.profiles SET roster_code = public.generate_roster_code() WHERE ros
 CREATE TABLE IF NOT EXISTS public.site_settings (
   id boolean PRIMARY KEY DEFAULT true CHECK (id = true),
   roster_visible_fields jsonb NOT NULL DEFAULT '["roster_code","city","cover_url","avatar_url"]'::jsonb,
-  developer_credit_name text NOT NULL DEFAULT 'Engineer Franck MBOGNE',
+  developer_credit_name text NOT NULL DEFAULT 'Franck MBOGNE',
   developer_credit_url  text NOT NULL DEFAULT 'https://www.FranckMbogne.dev',
   admin_notify_email    text NOT NULL DEFAULT 'kaslynatelier@gmail.com',
   updated_at timestamptz NOT NULL DEFAULT now()
