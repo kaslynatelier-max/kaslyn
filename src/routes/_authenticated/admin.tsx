@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { listRequests, markReplied, listAllProfilesAdmin, toggleProfileApproval } from "@/lib/requests.functions";
+import { listRequests, listAllProfilesAdmin, toggleProfileApproval } from "@/lib/requests.functions";
+import { sendReplyEmail } from "@/lib/email.functions";
 import { getMyProfile } from "@/lib/profiles.functions";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -17,7 +18,7 @@ function AdminPage() {
   const fetchProfile = useServerFn(getMyProfile);
   const fetchReqs = useServerFn(listRequests);
   const fetchProfs = useServerFn(listAllProfilesAdmin);
-  const reply = useServerFn(markReplied);
+  const sendReply = useServerFn(sendReplyEmail);
   const toggle = useServerFn(toggleProfileApproval);
 
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
@@ -26,6 +27,15 @@ function AdminPage() {
   const [profs, setProfs] = useState<Prof[]>([]);
   const [openId, setOpenId] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
+  const [invoiceOn, setInvoiceOn] = useState(false);
+  const [invNumber, setInvNumber] = useState("");
+  const [invCurrency, setInvCurrency] = useState("INR");
+  const [invDueDate, setInvDueDate] = useState("");
+  const [invItems, setInvItems] = useState<{ description: string; quantity: number; unit_price: number }[]>([
+    { description: "", quantity: 1, unit_price: 0 },
+  ]);
+  const [sending, setSending] = useState(false);
+  const [sendErr, setSendErr] = useState<string | null>(null);
 
   useEffect(() => {
     fetchProfile().then((p) => setIsAdmin(p.roles.includes("admin")));
@@ -48,15 +58,36 @@ function AdminPage() {
     </div>
   );
 
-  async function sendReply(r: Req) {
-    const subject = encodeURIComponent(`Kaslyn Atelier — re: ${r.project_type ?? "your casting brief"}`);
-    const body = encodeURIComponent(replyText);
-    window.location.href = `mailto:${r.email}?subject=${subject}&body=${body}`;
+  function resetReply() {
+    setOpenId(null); setReplyText(""); setInvoiceOn(false);
+    setInvNumber(""); setInvDueDate(""); setInvCurrency("INR");
+    setInvItems([{ description: "", quantity: 1, unit_price: 0 }]);
+    setSendErr(null);
+  }
+  async function sendReplyNow(r: Req) {
+    setSending(true); setSendErr(null);
     try {
-      await reply({ data: { id: r.id, reply: replyText } });
+      await sendReply({
+        data: {
+          request_id: r.id,
+          to: r.email,
+          subject: `Kaslyn Atelier — re: ${r.project_type ?? "your casting brief"}`,
+          message: replyText,
+          invoice: invoiceOn
+            ? {
+                number: invNumber || `KAS-${Date.now().toString().slice(-6)}`,
+                currency: invCurrency,
+                items: invItems.filter((i) => i.description.trim()),
+                due_date: invDueDate || undefined,
+              }
+            : null,
+        },
+      });
       setReqs((rs) => rs.map((x) => x.id === r.id ? { ...x, status: "replied", admin_reply: replyText } : x));
-      setOpenId(null); setReplyText("");
-    } catch {}
+      resetReply();
+    } catch (err) {
+      setSendErr(err instanceof Error ? err.message : "Failed to send");
+    } finally { setSending(false); }
   }
 
   async function setApproval(p: Prof, approved: boolean) {
@@ -102,9 +133,32 @@ function AdminPage() {
                 {openId === r.id ? (
                   <div className="mt-4 space-y-3">
                     <textarea value={replyText} onChange={(e) => setReplyText(e.target.value)} rows={4} placeholder="Draft your reply…" className="w-full p-3 bg-cream border border-midnight/20 focus:outline-none focus:border-terra-bronze" />
+                    <label className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-bold">
+                      <input type="checkbox" checked={invoiceOn} onChange={(e) => setInvoiceOn(e.target.checked)} />
+                      Attach invoice
+                    </label>
+                    {invoiceOn && (
+                      <div className="p-4 border border-midnight/15 bg-cream/50 space-y-3">
+                        <div className="grid sm:grid-cols-3 gap-2">
+                          <input value={invNumber} onChange={(e) => setInvNumber(e.target.value)} placeholder="Invoice #" className="p-2 bg-cream border border-midnight/20 text-sm" />
+                          <input value={invCurrency} onChange={(e) => setInvCurrency(e.target.value)} placeholder="INR" className="p-2 bg-cream border border-midnight/20 text-sm" />
+                          <input value={invDueDate} onChange={(e) => setInvDueDate(e.target.value)} placeholder="Due date" className="p-2 bg-cream border border-midnight/20 text-sm" />
+                        </div>
+                        {invItems.map((it, idx) => (
+                          <div key={idx} className="grid grid-cols-[1fr_70px_100px_30px] gap-2">
+                            <input value={it.description} onChange={(e) => setInvItems((v) => v.map((x, i) => i === idx ? { ...x, description: e.target.value } : x))} placeholder="Line item" className="p-2 bg-cream border border-midnight/20 text-sm" />
+                            <input type="number" min="1" value={it.quantity} onChange={(e) => setInvItems((v) => v.map((x, i) => i === idx ? { ...x, quantity: Number(e.target.value) } : x))} className="p-2 bg-cream border border-midnight/20 text-sm" />
+                            <input type="number" min="0" step="0.01" value={it.unit_price} onChange={(e) => setInvItems((v) => v.map((x, i) => i === idx ? { ...x, unit_price: Number(e.target.value) } : x))} className="p-2 bg-cream border border-midnight/20 text-sm" />
+                            <button type="button" onClick={() => setInvItems((v) => v.filter((_, i) => i !== idx))} className="text-burgundy">×</button>
+                          </div>
+                        ))}
+                        <button type="button" onClick={() => setInvItems((v) => [...v, { description: "", quantity: 1, unit_price: 0 }])} className="text-[10px] uppercase tracking-[0.2em] font-bold text-terra-bronze">+ Add line</button>
+                      </div>
+                    )}
+                    {sendErr && <p className="text-xs text-burgundy">{sendErr}</p>}
                     <div className="flex gap-2">
-                      <button onClick={() => sendReply(r)} className="px-5 py-2 bg-midnight text-cream text-[10px] uppercase tracking-[0.3em] font-bold">Send via Email</button>
-                      <button onClick={() => { setOpenId(null); setReplyText(""); }} className="px-5 py-2 border border-midnight/20 text-[10px] uppercase tracking-[0.3em] font-bold">Cancel</button>
+                      <button disabled={sending} onClick={() => sendReplyNow(r)} className="px-5 py-2 bg-midnight text-cream text-[10px] uppercase tracking-[0.3em] font-bold disabled:opacity-50">{sending ? "Sending…" : invoiceOn ? "Send reply + invoice" : "Send reply email"}</button>
+                      <button onClick={resetReply} className="px-5 py-2 border border-midnight/20 text-[10px] uppercase tracking-[0.3em] font-bold">Cancel</button>
                     </div>
                   </div>
                 ) : (

@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, User } from "lucide-react";
+import { ThemeToggle } from "./theme-toggle";
 import { supabase } from "@/integrations/supabase/client";
 
 const links = [
@@ -45,13 +46,15 @@ export function SiteNav({ variant = "light" }: { variant?: "light" | "dark" }) {
           <Menu size={22} />
         </button>
         <div className="md:hidden justify-self-center">{wordmark}</div>
-        <Link
-          to={signedIn ? "/profile" : "/auth"}
-          className="md:hidden justify-self-end"
-          aria-label={signedIn ? "Profile" : "Sign in"}
-        >
-          <User size={20} />
-        </Link>
+        <div className="md:hidden justify-self-end flex items-center gap-1">
+          <ThemeToggle />
+          <Link
+            to={signedIn ? "/profile" : "/auth"}
+            aria-label={signedIn ? "Profile" : "Sign in"}
+          >
+            <User size={20} />
+          </Link>
+        </div>
 
         {/* Desktop: wordmark left */}
         <div className="hidden md:flex items-center">{wordmark}</div>
@@ -68,6 +71,7 @@ export function SiteNav({ variant = "light" }: { variant?: "light" | "dark" }) {
           ))}
         </div>
         <div className="hidden md:flex items-center gap-4">
+          <ThemeToggle />
           <Link
             to={signedIn ? "/profile" : "/auth"}
             className="text-[10px] uppercase tracking-[0.25em] font-semibold hover:text-terra-mid"

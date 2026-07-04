@@ -10,7 +10,7 @@ interface MatchResult {
   matches: { slug: string; score: number; reasoning: string }[];
 }
 
-export function AiMatcher({ variant = "light" }: { variant?: "light" | "dark" | "terra" }) {
+export function AiMatcher({ variant = "light" }: { variant?: "light" | "dark" | "terra" | "white" }) {
   const fn = useServerFn(matchModels);
   const [brief, setBrief] = useState("");
   const [mood, setMood] = useState<string[]>(["High Fashion"]);
@@ -41,22 +41,27 @@ export function AiMatcher({ variant = "light" }: { variant?: "light" | "dark" | 
 
   const isDark = variant === "dark";
   const isTerra = variant === "terra";
+  const isWhite = variant === "white";
   const panelBase = isDark
     ? "bg-midnight/60 border border-cream/10 text-cream"
     : isTerra
       ? "bg-terra-mid border border-terra-bronze/30 text-cream"
-      : "bg-terra-light/30 border border-terra-mid/15 text-midnight";
+      : isWhite
+        ? "bg-white border border-midnight/15 text-midnight shadow-[0_20px_60px_-30px_rgba(0,0,0,0.25)]"
+        : "bg-terra-light/30 border border-terra-mid/15 text-midnight";
   const inputBase = isDark
-    ? "bg-midnight border border-cream/15 text-cream placeholder:text-cream/30 focus:border-terra-mid"
+    ? "bg-midnight border border-cream/15 text-cream placeholder:text-cream/40 focus:border-terra-mid"
     : isTerra
-      ? "bg-terra-bronze/40 border border-cream/20 text-cream placeholder:text-cream/50 focus:border-cream"
-      : "bg-cream border border-midnight/10 text-midnight placeholder:text-midnight/30 focus:border-terra-mid";
+      ? "bg-cream border border-midnight/10 text-midnight placeholder:text-midnight/50 focus:border-midnight"
+      : isWhite
+        ? "bg-cream border border-midnight/20 text-midnight placeholder:text-midnight/50 focus:border-midnight"
+        : "bg-cream border border-midnight/10 text-midnight placeholder:text-midnight/50 focus:border-terra-mid";
 
   return (
     <div className={`p-8 md:p-10 ${panelBase}`}>
       <div className="flex items-center gap-3 mb-8">
         <span className="w-2 h-2 rounded-full bg-burgundy animate-pulse" />
-        <h3 className="font-serif text-2xl md:text-3xl">Talent Matcher</h3>
+        <h3 className="font-sans text-lg md:text-xl font-semibold tracking-[0.2em] uppercase">Talent Matcher</h3>
       </div>
 
       <form onSubmit={onSubmit} className="space-y-6">
@@ -115,7 +120,7 @@ export function AiMatcher({ variant = "light" }: { variant?: "light" | "dark" | 
 
       {result && (
         <div className="mt-10 pt-8 border-t border-current/10 animate-fade-up">
-          <p className="font-serif italic text-lg md:text-xl mb-6 leading-snug">
+          <p className="font-sans text-base md:text-lg mb-6 leading-relaxed font-medium">
             “{result.summary}”
           </p>
           <div className="grid sm:grid-cols-3 gap-5">
@@ -133,9 +138,9 @@ export function AiMatcher({ variant = "light" }: { variant?: "light" | "dark" | 
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-serif text-xl italic text-terra-bronze">{model.code}</h4>
-                    <p className="text-[10px] uppercase tracking-[0.2em] opacity-60 mt-0.5">{model.city}</p>
-                    <p className="text-xs leading-relaxed mt-2 opacity-80">{m.reasoning}</p>
+                    <h4 className="font-sans text-base font-bold tracking-[0.2em] uppercase text-terra-bronze">{model.code}</h4>
+                    <p className="text-[10px] uppercase tracking-[0.2em] mt-1 opacity-80">{model.city}</p>
+                    <p className="text-xs leading-relaxed mt-2">{m.reasoning}</p>
                   </div>
                 </div>
               );

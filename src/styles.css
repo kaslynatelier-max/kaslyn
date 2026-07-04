@@ -84,7 +84,7 @@
   --secondary: var(--terra-light);
   --secondary-foreground: var(--midnight);
   --muted: oklch(0.94 0.012 70);
-  --muted-foreground: oklch(0.42 0.02 50);
+  --muted-foreground: oklch(0.32 0.02 50);
   --accent: var(--terra-mid);
   --accent-foreground: var(--cream);
   --destructive: oklch(0.55 0.21 25);
@@ -140,7 +140,13 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    font-weight: 400;
   }
+
+  /* Improve legibility on darker/photo backgrounds. */
+  .dark img, .dark video { color-scheme: dark; }
+  p, li { line-height: 1.65; }
+  ::placeholder { color: color-mix(in oklab, currentColor 55%, transparent); }
 
   ::selection {
     background-color: var(--burgundy);
