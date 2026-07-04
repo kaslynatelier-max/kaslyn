@@ -22,7 +22,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-function HomePage() {
+export function HomePage() {
   const featured = MODELS.slice(0, 3);
   const heroImages = [hero1, hero2, hero3];
   const [idx, setIdx] = useState(0);
