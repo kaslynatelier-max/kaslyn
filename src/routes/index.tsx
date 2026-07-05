@@ -58,6 +58,7 @@ export function HomePage() {
               <div className="mt-12 flex flex-col md:flex-row md:items-end gap-8 max-w-2xl">
                 <p className="text-cream text-sm md:text-base leading-relaxed tracking-wide max-w-md drop-shadow">
                   Kaslyn bridges exceptional talent with visionary brands. From editorial to runway, we craft campaigns that leave a lasting impression.
+                </p>
                 <div className="flex flex-col sm:flex-row gap-3 shrink-0">
                   <Link to="/Casting" className="px-8 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
                     Start Casting
