@@ -56,12 +56,10 @@ export const listPublicProfiles = createServerFn({ method: "GET" }).handler(asyn
     { auth: { storage: undefined, persistSession: false, autoRefreshToken: false } },
   );
   const { data, error } = await supabasePublic
-    .from("profiles")
+    .from("public_roster_profiles")
     .select("id, roster_code, city, avatar_url, cover_url")
-    .eq("is_public", true)
-    .eq("approved", true)
-    .order("created_at", { ascending: false })
     .limit(60);
   if (error) throw new Error(error.message);
-  return data ?? [];
+  return (data ?? [])
+    .filter((r): r is { id: string; roster_code: string | null; city: string | null; avatar_url: string | null; cover_url: string | null } => r.id != null);
 });

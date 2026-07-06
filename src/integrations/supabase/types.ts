@@ -250,7 +250,54 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_roster_profiles: {
+        Row: {
+          avatar_url: string | null
+          city: string | null
+          cover_url: string | null
+          id: string | null
+          roster_code: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          city?: string | null
+          cover_url?: string | null
+          id?: string | null
+          roster_code?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          city?: string | null
+          cover_url?: string | null
+          id?: string | null
+          roster_code?: string | null
+        }
+        Relationships: []
+      }
+      public_site_settings: {
+        Row: {
+          developer_credit_name: string | null
+          developer_credit_url: string | null
+          id: boolean | null
+          roster_visible_fields: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          developer_credit_name?: string | null
+          developer_credit_url?: string | null
+          id?: boolean | null
+          roster_visible_fields?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          developer_credit_name?: string | null
+          developer_credit_url?: string | null
+          id?: boolean | null
+          roster_visible_fields?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       generate_roster_code: { Args: never; Returns: string }
