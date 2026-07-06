@@ -8,7 +8,7 @@ const entries = [
   { path: "/talent", priority: "0.9", changefreq: "weekly" as const },
   { path: "/portfolio", priority: "0.8", changefreq: "monthly" as const },
   { path: "/services", priority: "0.8", changefreq: "monthly" as const },
-  { path: "/ai-discovery", priority: "0.7", changefreq: "monthly" as const },
+  { path: "/casting", priority: "0.7", changefreq: "monthly" as const },
   { path: "/contact", priority: "0.6", changefreq: "monthly" as const },
   { path: "/auth", priority: "0.3", changefreq: "yearly" as const },
 ];

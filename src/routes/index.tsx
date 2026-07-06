@@ -60,7 +60,7 @@ export function HomePage() {
                   Kaslyn bridges exceptional talent with visionary brands. From editorial to runway, we craft campaigns that leave a lasting impression.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-                  <Link to="/Casting" className="px-8 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
+                  <Link to="/casting" className="px-8 py-4 bg-terra-bronze text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
                     Start Casting
                   </Link>
                   <Link to="/talent" className="px-8 py-4 border border-cream/60 text-cream text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-cream hover:text-midnight transition-colors text-center">
@@ -90,7 +90,7 @@ export function HomePage() {
             </h2>
             <p className="text-midnight/60 leading-loose max-w-md">
              We represent exceptional models and creative talent, connecting them with leading brands, fashion houses, and global campaigns. Every collaboration is built on elegance, professionalism, and lasting impact.</p>
-            <Link to="/Casting" className="inline-block mt-10 text-[10px] uppercase tracking-[0.3em] font-bold text-terra-bronze border-b border-terra-bronze pb-1 hover:text-burgundy hover:border-burgundy transition-colors">
+            <Link to="/casting" className="inline-block mt-10 text-[10px] uppercase tracking-[0.3em] font-bold text-terra-bronze border-b border-terra-bronze pb-1 hover:text-burgundy hover:border-burgundy transition-colors">
               Start Casting →
             </Link>
           </div>
