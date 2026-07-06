@@ -14,8 +14,8 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CastingRouteImport } from './routes/casting'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AiDiscoveryRouteImport } from './routes/ai-discovery'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -48,14 +48,14 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CastingRoute = CastingRouteImport.update({
+  id: '/casting',
+  path: '/casting',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AiDiscoveryRoute = AiDiscoveryRouteImport.update({
-  id: '/ai-discovery',
-  path: '/ai-discovery',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -91,8 +91,8 @@ const ApiPublicBootstrapAdminRoute = ApiPublicBootstrapAdminRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/ai-discovery': typeof AiDiscoveryRoute
   '/auth': typeof AuthRoute
+  '/casting': typeof CastingRoute
   '/contact': typeof ContactRoute
   '/portfolio': typeof PortfolioRoute
   '/services': typeof ServicesRoute
@@ -105,8 +105,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/ai-discovery': typeof AiDiscoveryRoute
   '/auth': typeof AuthRoute
+  '/casting': typeof CastingRoute
   '/contact': typeof ContactRoute
   '/portfolio': typeof PortfolioRoute
   '/services': typeof ServicesRoute
@@ -121,8 +121,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/ai-discovery': typeof AiDiscoveryRoute
   '/auth': typeof AuthRoute
+  '/casting': typeof CastingRoute
   '/contact': typeof ContactRoute
   '/portfolio': typeof PortfolioRoute
   '/services': typeof ServicesRoute
@@ -137,8 +137,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/ai-discovery'
     | '/auth'
+    | '/casting'
     | '/contact'
     | '/portfolio'
     | '/services'
@@ -151,8 +151,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/ai-discovery'
     | '/auth'
+    | '/casting'
     | '/contact'
     | '/portfolio'
     | '/services'
@@ -166,8 +166,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
-    | '/ai-discovery'
     | '/auth'
+    | '/casting'
     | '/contact'
     | '/portfolio'
     | '/services'
@@ -182,8 +182,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  AiDiscoveryRoute: typeof AiDiscoveryRoute
   AuthRoute: typeof AuthRoute
+  CastingRoute: typeof CastingRoute
   ContactRoute: typeof ContactRoute
   PortfolioRoute: typeof PortfolioRoute
   ServicesRoute: typeof ServicesRoute
@@ -230,18 +230,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/casting': {
+      id: '/casting'
+      path: '/casting'
+      fullPath: '/casting'
+      preLoaderRoute: typeof CastingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ai-discovery': {
-      id: '/ai-discovery'
-      path: '/ai-discovery'
-      fullPath: '/ai-discovery'
-      preLoaderRoute: typeof AiDiscoveryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -305,8 +305,8 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  AiDiscoveryRoute: AiDiscoveryRoute,
   AuthRoute: AuthRoute,
+  CastingRoute: CastingRoute,
   ContactRoute: ContactRoute,
   PortfolioRoute: PortfolioRoute,
   ServicesRoute: ServicesRoute,
@@ -318,13 +318,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
