@@ -3,12 +3,12 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { AiMatcher } from "@/components/ai-matcher";
 
-export const Route = createFileRoute("/ai-discovery")({
+export const Route = createFileRoute("/casting")({
   head: () => ({
     meta: [
-      { title: "AI Discovery — Kaslyn Atelier" },
+      { title: "Casting — Kaslyn Atelier" },
       { name: "description", content: "Describe your campaign. Our AI casting engine surfaces a curated shortlist of Kaslyn Atelier models within seconds." },
-      { property: "og:title", content: "AI Discovery — Kaslyn Atelier" },
+      { property: "og:title", content: "Casting — Kaslyn Atelier" },
       { property: "og:description", content: "Describe your campaign. The AI casting engine returns a curated shortlist in seconds." },
     ],
   }),
