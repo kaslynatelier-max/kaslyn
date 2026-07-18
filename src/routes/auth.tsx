@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -57,13 +56,6 @@ function AuthPage() {
     }
   }
 
-  async function google() {
-    setErr(null);
-    const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
-    if (res.error) setErr(res.error.message || "Google sign-in failed");
-    else if (!res.redirected) navigate({ to: "/profile" });
-  }
-
   return (
     <div className="min-h-screen bg-cream text-midnight flex flex-col">
       <SiteNav />
@@ -79,17 +71,7 @@ function AuthPage() {
               : "Sign in to manage your profile and roster status."}
           </p>
 
-          <button
-            onClick={google}
-            className="mt-10 w-full py-4 border border-midnight text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-midnight hover:text-cream transition-colors"
-          >
-            Continue with Google
-          </button>
-          <div className="my-6 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-foreground/40">
-            <div className="flex-1 h-px bg-midnight/15" /> or <div className="flex-1 h-px bg-midnight/15" />
-          </div>
-
-          <form onSubmit={submit} className="space-y-4">
+          <form onSubmit={submit} className="space-y-4 mt-10">
             {mode === "signup" && (
               <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" className="w-full bg-transparent border-b border-midnight/20 py-3 focus:outline-none focus:border-terra-bronze" />
             )}
