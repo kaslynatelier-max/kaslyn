@@ -4,10 +4,11 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { AiMatcher } from "@/components/ai-matcher";
 import { MODELS } from "@/lib/models";
-import heroVideo from "@/assets/kaslyn-hero.mp4.asset.json";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
 import hero3 from "@/assets/hero-3.jpg";
+
+const HERO_VIDEO_SRC = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -81,7 +82,7 @@ export function HomePage() {
       <section className="py-20 md:py-32 px-6 md:px-12 bg-cream">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div className="aspect-[4/5] w-full overflow-hidden bg-midnight">
-            <video src={heroVideo.url} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+            <video src={HERO_VIDEO_SRC} autoPlay muted loop playsInline preload="metadata" className="w-full h-full object-cover" />
           </div>
           <div>
             <span className="text-terra-mid font-bold uppercase tracking-[0.3em] text-[10px]">Modern Innovation</span>

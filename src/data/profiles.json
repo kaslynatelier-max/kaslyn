@@ -1,0 +1,26 @@
+[
+  {
+    "id": "11111111-1111-1111-1111-111111111111",
+    "full_name": "Demo Model",
+    "age": 26,
+    "phone": null,
+    "height_cm": 178,
+    "skin_tone": "Warm beige",
+    "hair": "Black",
+    "eyes": "Brown",
+    "city": "Mumbai",
+    "bio": "Editorial and luxury campaign talent.",
+    "instagram": null,
+    "avatar_url": null,
+    "cover_url": null,
+    "preferences": {},
+    "is_public": true,
+    "approved": true,
+    "created_at": "2026-07-19T00:00:00.000Z",
+    "updated_at": "2026-07-19T00:00:00.000Z",
+    "email": null,
+    "custom_fields": {},
+    "roster_code": null,
+    "weight_kg": null
+  }
+]
